@@ -4,7 +4,8 @@
   "description": "Electron Update Server",
   "main": "src/server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "mocha --compilers js:babel-register --recursive"
   },
   "license": "MIT",
   "dependencies": {
@@ -19,5 +20,9 @@
     "koa-send": "^3.1.0",
     "moment": "^2.10.6",
     "semver": "^5.0.3"
+  },
+  "devDependencies": {
+    "expect": "^1.13.4",
+    "mocha": "^2.3.4"
   }
 }
