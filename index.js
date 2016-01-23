@@ -28,7 +28,7 @@ var express = require('express'),
     };
 
 app.use(morgan());
-app.use('/updates', express.static(updatesDir))
+app.use('/updates', express.static(updatesDir));
 
 app.get('/:app', function(req, res) {
     var updates = [];
@@ -77,4 +77,4 @@ app.get('/:app/:version', function(req, res) {
         });
 });
 
-app.listen(process.env.UPDATER_PORT);
+app.listen(port);
