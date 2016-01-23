@@ -8,7 +8,7 @@ var express = require('express'),
     updatesDir = process.env.UPDATER_DIRECTORY || path.join(__dirname, '/updates'),
     scheme = process.env.UPDATER_SCHEME || 'http',
     host = process.env.UPDATER_HOST || 'localhost',
-    port = process.env.UPDATER_PORT || 8000,
+    port = process.env.UPDATER_PORT || 80,
     findUpdates = function(dir) {
         return fs.readdirSync(dir)
             .filter(function(dir) {
@@ -77,4 +77,4 @@ app.get('/:app/:version', function(req, res) {
         });
 });
 
-app.listen(8000);
+app.listen(process.env.UPDATER_PORT);
