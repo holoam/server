@@ -1,4 +1,4 @@
-import expect from 'expect'
+import expect from 'expect';
 import UrlGenerator from '../../lib/utils/urlGenerator';
 import App from '../../lib/models/app';
 import Release from '../../lib/models/release';
@@ -12,5 +12,5 @@ describe('UrlGenerator', () => {
 
         expect(generator.generateDownloadReleaseUrl(app, release))
             .toEqual('http://baseUrl/app/v1/update')
-    })
-})
+    });
+});
