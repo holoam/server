@@ -4,6 +4,7 @@ import UrlGenerator from '../../lib/utils/urlGenerator';
 import App from '../../lib/models/app';
 import Release from '../../lib/models/release';
 import AppController from '../../lib/controllers/app';
+import createError from "http-errors";
 
 describe('App Controller', () => {
     const baseUrl = 'http://baseUrl',
@@ -12,43 +13,50 @@ describe('App Controller', () => {
         today = new Date(),
         todoRelease = new Release('1.0.0', 'notes', today),
         mockAppFinder = {
-            apps: function*() { yield todoApp },
-            app: (name) => (name === 'todo' ? todoApp : null)
+            apps: async () => [todoApp],
+            app: async name => (name === 'todo' ? todoApp : null)
         },
         mockReleaseFinder = {
-            releases: function*(name) { yield todoRelease; },
-            release: (app, version) => todoRelease
+            releases: async () => [todoRelease],
+            release: async () => todoRelease
         };
 
-    it('list apps', () => {
+    it('list apps', async () => {
         const controller = new AppController(mockAppFinder, mockReleaseFinder, generator);
         const context = {
             headers: {},
             set: function(key, value) {
                 this.headers[key] = value;
+            },
+            assert: function(condition, status, message) {
+                if (!condition) {
+                    this.status = status;
+                    this.body = message;
+                }
             }
         };
-        const gen = controller.listAction(context);
-        gen.next();
+
+        await controller.listAction(context);
 
         expect(context.status)
             .toEqual(200);
         expect(context.headers)
             .toEqual({ 'Content-Type': 'application/json; charset=utf-8' });
         expect(context.body)
-            .toEqual([ { name: 'todo' } ]);
+            .toEqual([ todoApp ]);
     });
 
-    it('show defined app', () => {
+    it('show defined app', async () => {
         const controller = new AppController(mockAppFinder, mockReleaseFinder, generator);
         const context = {
             headers: {},
             set: function(key, value) {
                 this.headers[key] = value;
-            }
+            },
+            assert: () => {}
         };
-        const gen = controller.showAction(context, 'todo');
-        gen.next();
+
+        await controller.showAction(context, 'todo');
 
         expect(context.status)
             .toEqual(200);
@@ -65,31 +73,44 @@ describe('App Controller', () => {
             ]);
     });
 
-    it('show undefined app', () => {
+    it('show undefined app', async () => {
         const controller = new AppController(mockAppFinder, mockReleaseFinder, generator);
         const context = {
             headers: {},
             set: function(key, value) {
                 this.headers[key] = value;
+            },
+            assert: function(condition, status, message) {
+                if (condition) {
+                    return;
+                }
+
+                this.status = status;
+                this.body = message;
+
+                throw new createError(status, message);
             }
         };
-        const gen = controller.showAction(context, 'tata');
-        gen.next();
+
+        try {
+            await controller.showAction(context, 'tata');
+        } catch(error) {}
 
         expect(context.status)
             .toEqual(404);
     });
 
-    it('show release to download', () => {
+    it('show release to download', async () => {
         const controller = new AppController(mockAppFinder, mockReleaseFinder, generator);
         const context = {
             headers: {},
             set: function(key, value) {
                 this.headers[key] = value;
-            }
+            },
+            assert: () => {}
         };
-        const gen = controller.releaseAction(context, 'todo', '0.0.0');
-        gen.next();
+
+        await controller.releaseAction(context, 'todo', '0.0.0');
 
         expect(context.status)
             .toEqual(200);
@@ -104,16 +125,17 @@ describe('App Controller', () => {
             });
     });
 
-    it('no release to download', () => {
+    it('no release to download', async () => {
         const controller = new AppController(mockAppFinder, mockReleaseFinder, generator);
         const context = {
             headers: {},
             set: function(key, value) {
                 this.headers[key] = value;
-            }
+            },
+            assert: () => {}
         };
-        const gen = controller.releaseAction(context, 'todo', '1.0.0');
-        gen.next();
+
+        await controller.releaseAction(context, 'todo', '1.0.0');
 
         expect(context.status)
             .toEqual(204);
