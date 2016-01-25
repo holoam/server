@@ -1,2 +1,5 @@
-node_modules
-updates
+node_modules/
+updates/
+testapp/neutron-testapp-darwin-x64/
+
+*.log
