@@ -1,4 +1,4 @@
-Neutron
+Neutron [![Build Status](https://travis-ci.org/jubianchi/neutron.svg?branch=master)](https://travis-ci.org/jubianchi/neutron)
 =======
 
 A simple electron updates server in Node.JS
