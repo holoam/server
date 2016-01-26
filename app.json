@@ -1,0 +1,39 @@
+{
+    "name": "neutron",
+    "description": "neutron update server",
+    "repository": "https://github.com/jubianchi/neutron",
+    "keywords": ["node", "koa", "electron", "squirrel"],
+    "env": {
+        "UPDATER_SCHEME": {
+            "description": "Scheme used to reach the neutron instance",
+            "value": "https",
+            "required": true
+        },
+        "UPDATER_HOST": {
+            "description": "Public host of the neutron instance",
+            "value": "<appname>.herokuapp.com",
+            "required": true
+        },
+        "UPDATER_PORT": {
+            "description": "Public port used to reach the neuron instance",
+            "value": 443,
+            "required": true
+        },
+        "UPDATER_STORAGE": {
+            "description": "Storage provider used to host updates",
+            "value": "azure",
+            "required": true
+        },
+        "UPDATER_STORAGE_AZURE_ACCOUNT": {
+            "description": "Azure storage account name",
+            "value": "neutron",
+            "required": true
+        },
+        "UPDATER_STORAGE_AZURE_KEY": {
+            "description": "Azure storage account key",
+            "value": "",
+            "required": true
+        }
+    },
+    "image": "heroku/nodejs"
+}

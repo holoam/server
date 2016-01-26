@@ -3,6 +3,8 @@ Neutron [![Build Status](https://travis-ci.org/jubianchi/neutron.svg?branch=mast
 
 A simple electron updates server in Node.JS
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/jubianchi/neutron/tree/master)
+
 Features
 ========
 
