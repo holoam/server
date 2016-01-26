@@ -1,10 +1,10 @@
 import 'babel-polyfill';
 import expect from 'expect';
-import UrlGenerator from '../../lib/utils/urlGenerator';
-import App from '../../lib/models/app';
-import Release from '../../lib/models/release';
-import AppController from '../../lib/controllers/app';
 import createError from "http-errors";
+import UrlGenerator from '../../../lib/utils/urlGenerator';
+import App from '../../../lib/models/app';
+import Release from '../../../lib/models/release';
+import AppController from '../../../lib/controllers/app';
 
 describe('App Controller', () => {
     const baseUrl = 'http://baseUrl',

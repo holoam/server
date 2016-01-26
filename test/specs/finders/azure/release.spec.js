@@ -1,10 +1,9 @@
 import "babel-polyfill";
 import expect from "expect";
 import fs from "fs";
-import App from "../../../lib/models/app";
-import Release from "../../../lib/models/release";
-import AzureReleaseFinder from "../../../lib/finders/azure/release";
 import pkgcloud from "pkgcloud";
+import App from "../../../../lib/models/app";
+import AzureReleaseFinder from "../../../../lib/finders/azure/release";
 
 describe("AzureReleaseFinder", () => {
     let finder, app, client;

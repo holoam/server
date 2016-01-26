@@ -2,8 +2,7 @@ import "babel-polyfill";
 import expect from "expect";
 import fs from "fs";
 import path from "path";
-import App from "../../../lib/models/app";
-import LocalAppFinder from "../../../lib/finders/local/app";
+import LocalAppFinder from "../../../../lib/finders/local/app";
 
 describe("LocalAppFinder", () => {
     let finder;
