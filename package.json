@@ -7,7 +7,7 @@
     "start": "node index.js",
     "test": "npm run specs && npm run features",
     "specs": "mocha --compilers js:babel-register --recursive test/specs",
-    "prefeatures": "UPDATER_PID_FILE=pid npm start >/dev/null & sleep 10 && mkdir -p updates",
+    "prefeatures": "NEUTRON_PID_FILE=pid npm start >/dev/null & sleep 10 && mkdir -p updates",
     "features": "cucumber-js test/features",
     "postfeatures": "kill $(cat pid) && rm -rf updates pid",
     "build": "babel -d compiled lib/"
