@@ -1,7 +1,7 @@
 import "babel-polyfill";
 import expect from "expect";
-import AzureAppFinder from "../../../lib/finders/azure/app";
 import pkgcloud from "pkgcloud";
+import AzureAppFinder from "../../../../lib/finders/azure/app";
 
 describe("AzureAppFinder", () => {
     let finder, client;

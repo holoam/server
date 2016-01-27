@@ -1,9 +1,8 @@
 import "babel-polyfill";
 import expect from "expect";
 import fs from "fs";
-import App from "../../../lib/models/app";
-import Release from "../../../lib/models/release";
-import LocalReleaseFinder from "../../../lib/finders/local/release";
+import App from "../../../../lib/models/app";
+import LocalReleaseFinder from "../../../../lib/finders/local/release";
 
 describe("LocalReleaseFinder", () => {
     let finder, app;

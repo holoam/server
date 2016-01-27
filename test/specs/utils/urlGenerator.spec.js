@@ -1,7 +1,7 @@
 import expect from 'expect';
-import UrlGenerator from '../../lib/utils/urlGenerator';
-import App from '../../lib/models/app';
-import Release from '../../lib/models/release';
+import UrlGenerator from '../../../lib/utils/urlGenerator';
+import App from '../../../lib/models/app';
+import Release from '../../../lib/models/release';
 
 describe('UrlGenerator', () => {
     it('generate the right url for a release', () => {

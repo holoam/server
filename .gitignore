@@ -3,3 +3,4 @@ updates/
 testapp/neutron-testapp-darwin-x64/
 
 *.log
+/pid
