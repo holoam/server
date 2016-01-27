@@ -11,10 +11,25 @@
 <div class="container-fluid">
     <h1>Neutron TestApp</h1>
 
-    <div class="form-group">
-        <label for="neutron-url">Neutron URL</label>
-        <input type="url" class="form-control" id="neutron-url" value="http://localhost:8080">
-    </div>
+    <form>
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="form-group has-feedback has-success" id="group-url">
+                    <label class="control-label" for="neutron-url">Neutron URL</label>
+                    <input type="url" class="form-control" id="neutron-url" value="http://localhost:8080">
+                    <span class="glyphicon glyphicon-ok form-control-feedback" id="icon-url" aria-hidden="true"></span>
+                </div>
+            </div>
+
+            <div class="col-xs-4">
+                <div class="form-group has-feedback has-success" id="group-version">
+                    <label class="control-label" for="neutron-version">Version</label>
+                    <input type="url" class="form-control" id="neutron-version" value="1.0.0">
+                    <span class="glyphicon glyphicon-ok form-control-feedback" id="icon-version" aria-hidden="true"></span>
+                </div>
+            </div>
+        </div>
+    </form>
 
     <button type="button" class="btn btn-info" id="start" onclick="startUpdater(this); return false">Start updater</button>
     <button type="button" class="btn btn-success" id="check" disabled="disabled" onclick="checkForUpdate(); return false">Check for update</button>
@@ -23,11 +38,12 @@
 
     <ol>
         <li>Enter the URL of your neutron instance</li>
+        <li>Enter a version (<code>x.y.z</code>) you want to start with</li>
         <li>Click on the <em>Start updater</em> button</li>
         <li>Click on the <em>Check for update</em> button</li>
     </ol>
 
-    <h3>Results <button type="button" class="btn btn-info btn-small" onclick="clearLog(); return false">Clear</button></h3>
+    <h3>Results <button type="button" class="btn btn-info btn-sm pull-right" onclick="clearLog(); return false">Clear</button></h3>
 
     <pre id="results"></pre>
 </div>

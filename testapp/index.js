@@ -13,7 +13,7 @@ app.on('ready', () => {
 
     mainWindow.on('closed', () => mainWindow = null);
 
-    IPC.on("start-updater", (_, url) => autoUpdater.setFeedURL(`${url}/apps/${app.getName()}/${app.getVersion()}`));
+    IPC.on("start-updater", (_, args) => autoUpdater.setFeedURL(`${args[0]}/apps/${app.getName()}/${args[1]}`));
     IPC.on("check-for-update", () => autoUpdater.checkForUpdates());
 
     const send = (event, args) =>  mainWindow.webContents.send(event, args);
