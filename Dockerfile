@@ -1,13 +1,19 @@
 FROM jubianchi/docker-node-4
 
-ENV NODE_ENV=production
-
 VOLUME /updates
 
-COPY ./ /app
+COPY ./lib /app/lib
 COPY ./package.json /app/package.json
+COPY ./.babelrc /app/.babelrc
 
 WORKDIR /app
+RUN npm install && \
+    npm run build && \
+    rm -rf /app/lib /app/node_modules && \
+    mv /app/compiled /app/lib
+
+ENV NODE_ENV=production
+
 RUN npm install
 
-ENTRYPOINT /node-v4.1.0-linux-x64/bin/npm start
+ENTRYPOINT /node-v4.1.0-linux-x64/bin/node /app/lib/index.js
