@@ -1,6 +1,7 @@
 node_modules/
 updates/
 testapp/neutron-testapp-darwin-x64/
+compiled/
 
 *.log
 /pid
