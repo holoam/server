@@ -19,14 +19,27 @@ class World {
     }
 
     reset() {
-        Object.keys(this.releases || {}).forEach(app => {
-            (this.releases[app] || []).forEach(name => fs.rmdirSync(path.join(this.directory, app, name)));
-        });
+        Object.keys(this.releases || {}).forEach(name => this.deleteApp(name));
 
-        (this.applications || []).forEach(name => fs.rmdirSync(path.join(this.directory, name)));
+        this.releases = {};
+    }
 
-        this.applications = [];
-        this.releases = {}
+    deleteApp(app) {
+        this.deleteReleases(app);
+
+        fs.rmdirSync(path.join(this.directory, app));
+
+        delete this.releases[app];
+    }
+
+    deleteReleases(app) {
+        this.releases[app].forEach(name => this.deleteRelease(app, name));
+    }
+
+    deleteRelease(app, name) {
+        fs.rmdirSync(path.join(this.directory, app, name));
+
+        this.releases[app] = this.releases[app].filter(release => release !== name);
     }
 
     get browser() {
@@ -47,8 +60,24 @@ class World {
         return {
             equals: (actual, expected) => expect(actual).toEqual(expected),
             includes: (actual, expected) => expect(actual).toInclude(expected),
-            json: (actual, expected) => validate(JSON.parse(actual), expected, { throwError: true })
+            json: (actual, expected) => validate(actual, expected, { throwError: true })
         }
+    }
+
+    get schemas() {
+        return {
+            empty: require("./schemas/empty-list"),
+            app: require("./schemas/app"),
+            apps: require("./schemas/apps"),
+            release: require("./schemas/release"),
+            releases: require("./schemas/releases")
+        }
+    }
+
+    get response() {
+        this._response.json = () => JSON.parse(this._response);
+
+        return this._response;
     }
 
     visit(url) {
@@ -57,23 +86,19 @@ class World {
 
     get(url) {
         return request.get(`${this.scheme}://${this.host}:${this.port}${url}`)
-            .then(response => this.response = response);
+            .then(response => this._response = new String(response));
     }
 
     createApp(name) {
-        return q.ninvoke(fs, "mkdir", path.join(this.directory, name))
-            .then(() => this.applications.push(name));
+        fs.mkdirSync(path.join(this.directory, name));
+
+        this.releases[name] = [];
     }
 
     createRelease(app, name) {
-        return q.ninvoke(fs, "mkdir", path.join(this.directory, app, name))
-            .then(() => {
-                if (!this.releases[app]) {
-                    this.releases[app] = [];
-                }
+        fs.mkdirSync(path.join(this.directory, app, name));
 
-                this.releases[app].push(name);
-            });
+        this.releases[app].push(name);
     }
 }
 

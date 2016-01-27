@@ -1,6 +1,7 @@
 Feature: API
 
   Scenario: No apps
+    Given there is no app
     When I GET "/apps"
     Then I should see an empty list
 
@@ -12,6 +13,7 @@ Feature: API
 
   Scenario: No Releases
     Given the "neutron" app exists
+    And there is no release for the "neutron" app
     When I GET "/apps/neutron"
     Then I should see an empty list
 
