@@ -2,6 +2,9 @@
   "name": "neutron",
   "version": "1.0.0",
   "description": "Electron Update Server",
+  "repository": {
+    "url": "https://github.com/jubianchi/neutron"
+  },
   "main": "src/server.js",
   "scripts": {
     "start": "node index.js",
@@ -10,11 +13,13 @@
     "prefeatures": "NEUTRON_PID_FILE=pid npm start >/dev/null & sleep 10 && mkdir -p updates",
     "features": "cucumber-js test/features",
     "postfeatures": "kill $(cat pid) && rm -rf updates pid",
-    "build": "babel -d compiled lib/"
+    "build": "babel -d compiled lib/",
+    "changelog": "conventional-changelog -i CHANGELOG.md -w -r 0 -p angular"
   },
   "license": "MIT",
   "dependencies": {
     "babel-polyfill": "^6.3.14",
+    "conventional-changelog": "^0.5.3",
     "koa": "^1.1.2",
     "koa-json": "^1.1.1",
     "koa-logger": "^1.3.0",
