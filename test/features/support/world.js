@@ -10,10 +10,10 @@ const Webdriver = require("webdriverio"),
 
 class World {
     constructor() {
-        this.scheme = process.env.UPDATER_SCHEME || "http";
-        this.host = process.env.UPDATER_HOST || "localhost";
-        this.port = process.env.UPDATER_PORT || 8080;
-        this.directory = process.env.UPDATER_STORAGE_LOCAL_DIRECTORY || path.join(__dirname, "..", "..", "..", "updates");
+        this.scheme = process.env.NEUTRON_SCHEME || "http";
+        this.host = process.env.NEUTRON_HOST || "localhost";
+        this.port = process.env.NEUTRON_PORT || 8080;
+        this.directory = process.env.NEUTRON_STORAGE_LOCAL_DIRECTORY || path.join(__dirname, "..", "..", "..", "updates");
 
         this.reset();
     }
