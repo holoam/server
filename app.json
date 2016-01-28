@@ -20,19 +20,34 @@
             "required": true
         },
         "NEUTRON_STORAGE": {
-            "description": "Storage provider used to host updates",
+            "description": "Storage provider used to host updates (one of 'azure' or 'amazon')",
             "value": "azure",
             "required": true
         },
         "NEUTRON_STORAGE_AZURE_ACCOUNT": {
             "description": "Azure storage account name",
-            "value": "neutron",
-            "required": true
+            "value": "",
+            "required": false
         },
         "NEUTRON_STORAGE_AZURE_KEY": {
             "description": "Azure storage account key",
             "value": "",
-            "required": true
+            "required": false
+        },
+        "NEUTRON_STORAGE_AMAZON_KEY": {
+            "description": "Amazon S3 storage access key ID",
+            "value": "",
+            "required": false
+        },
+        "NEUTRON_STORAGE_AMAZON_SECRET": {
+            "description": "Amazon S3 storage access key secret",
+            "value": "",
+            "required": false
+        },
+        "NEUTRON_STORAGE_AMAZON_REGION": {
+            "description": "Amazon S3 storage region (http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region)",
+            "value": "",
+            "required": false
         }
     },
     "image": "heroku/nodejs"
