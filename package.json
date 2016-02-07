@@ -33,6 +33,7 @@
     "moment": "^2.10.6",
     "pkgcloud": "^1.2.0-alpha.0",
     "q": "^1.4.1",
+    "request-promise": "^2.0.0",
     "semver": "^5.0.3"
   },
   "devDependencies": {
@@ -46,7 +47,6 @@
     "expect": "^1.13.4",
     "jsonschema": "^1.0.3",
     "mocha": "^2.3.4",
-    "request-promise": "^2.0.0",
     "webdriverio": "^3.4.0"
   }
 }
