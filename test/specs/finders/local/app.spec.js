@@ -1,13 +1,12 @@
 import "babel-polyfill";
 import expect from "expect";
 import fs from "fs";
-import path from "path";
 import LocalAppFinder from "../../../../lib/finders/local/app";
 
 describe("LocalAppFinder", () => {
     let finder;
 
-    beforeEach(() => finder = new LocalAppFinder(__dirname));
+    beforeEach(() => { finder = new LocalAppFinder(__dirname); });
 
     describe("exists", () => {
         it("should return true if app is a directory", async () => {
@@ -23,7 +22,7 @@ describe("LocalAppFinder", () => {
         });
 
         it("should return false if app does not exist", async () => {
-            expect.spyOn(fs, "stat").andCall((_, done) => done(null, { isDirectory: () => { throw new Error() } }));
+            expect.spyOn(fs, "stat").andCall((_, done) => done(null, { isDirectory: () => { throw new Error(); } }));
 
             expect(await finder.exists(__dirname, "todo")).toBe(false);
         });
@@ -68,7 +67,7 @@ describe("LocalAppFinder", () => {
         });
 
         it("should filter not existing apps", async() => {
-            expect.spyOn(finder, "exists").andCall(async (app) => app === "todo");
+            expect.spyOn(finder, "exists").andCall(async app => app === "todo");
             expect.spyOn(fs, "readdir").andCall((_, done) => done(null, ["todo", "neutron"]));
 
             expect(await finder.apps()).toEqual([{ name: "todo" }]);

@@ -1,12 +1,11 @@
 "use strict";
 
-const Webdriver = require("webdriverio"),
-    request = require("request-promise"),
-    expect = require("expect"),
-    path = require("path"),
-    fs = require("fs"),
-    q = require("q"),
-    validate = require('jsonschema').validate;
+const Webdriver = require("webdriverio");
+const request = require("request-promise");
+const expect = require("expect");
+const path = require("path");
+const fs = require("fs");
+const validate = require("jsonschema").validate;
 
 class World {
     constructor() {
@@ -63,7 +62,7 @@ class World {
             notEquals: (actual, expected) => expect(actual).toNotEqual(expected),
             includes: (actual, expected) => expect(actual).toInclude(expected),
             json: (actual, expected) => validate(actual, expected, { throwError: true })
-        }
+        };
     }
 
     get schemas() {
@@ -73,7 +72,7 @@ class World {
             apps: require("./schemas/apps"),
             release: require("./schemas/release"),
             releases: require("./schemas/releases")
-        }
+        };
     }
 
     get response() {
@@ -103,8 +102,12 @@ class World {
         };
 
         return request(options)
-            .then(response => this._response = response)
-            .catch(error => this._error = error);
+            .then(response => {
+                this._response = response;
+
+                return this._response;
+            })
+            .catch(error => { this._error = error; });
     }
 
     createApp(name) {
@@ -121,6 +124,6 @@ class World {
     }
 }
 
-module.exports = function() {
+module.exports = function () {
     this.World = World;
 };
