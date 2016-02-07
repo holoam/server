@@ -37,6 +37,7 @@ class World {
     }
 
     deleteRelease(app, name) {
+        fs.unlinkSync(path.join(this.directory, app, name, "update.zip"));
         fs.rmdirSync(path.join(this.directory, app, name));
 
         this.releases[app] = this.releases[app].filter(release => release !== name);
@@ -59,6 +60,7 @@ class World {
     get assert() {
         return {
             equals: (actual, expected) => expect(actual).toEqual(expected),
+            notEquals: (actual, expected) => expect(actual).toNotEqual(expected),
             includes: (actual, expected) => expect(actual).toInclude(expected),
             json: (actual, expected) => validate(actual, expected, { throwError: true })
         }
@@ -75,9 +77,15 @@ class World {
     }
 
     get response() {
-        this._response.json = () => JSON.parse(this._response);
+        this.assert.notEquals(this._response, undefined);
+
+        this._response.json = () => JSON.parse(this._response.body);
 
         return this._response;
+    }
+
+    get error() {
+        return this._error;
     }
 
     visit(url) {
@@ -85,8 +93,18 @@ class World {
     }
 
     get(url) {
-        return request.get(`${this.scheme}://${this.host}:${this.port}${url}`)
-            .then(response => this._response = new String(response));
+        this._response = undefined;
+        this._error = undefined;
+
+        const options = {
+            method: "GET",
+            uri: `${this.scheme}://${this.host}:${this.port}${url}`,
+            resolveWithFullResponse: true
+        };
+
+        return request(options)
+            .then(response => this._response = response)
+            .catch(error => this._error = error);
     }
 
     createApp(name) {
@@ -97,6 +115,7 @@ class World {
 
     createRelease(app, name) {
         fs.mkdirSync(path.join(this.directory, app, name));
+        fs.writeFileSync(path.join(this.directory, app, name, "update.zip"), "");
 
         this.releases[app].push(name);
     }
