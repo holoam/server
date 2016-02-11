@@ -8,10 +8,10 @@ import AmazonReleaseFinder from "../../../../lib/finders/amazon/release";
 describe("AmazonReleaseFinder", () => {
     let finder, app, client;
 
-    beforeEach(() => client = { getFiles: (_, done) => done(null, []), download: (opts = {}) => { throw new Error(); } });
-    beforeEach(() => expect.spyOn(pkgcloud.storage, "createClient").andReturn(client));
-    beforeEach(() => finder = new AmazonReleaseFinder("foo", "bar"));
-    beforeEach(() => app = new App("todo"));
+    beforeEach(() => { client = { getFiles: (_, done) => done(null, []), download: (opts = {}) => { throw new Error(); } }; });
+    beforeEach(() => { expect.spyOn(pkgcloud.storage, "createClient").andReturn(client); });
+    beforeEach(() => { finder = new AmazonReleaseFinder("foo", "bar"); });
+    beforeEach(() => { app = new App("todo"); });
 
     describe("release", () => {
         describe("when app exists", () => {

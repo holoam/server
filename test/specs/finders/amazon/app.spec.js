@@ -6,9 +6,9 @@ import AmazonAppFinder from "../../../../lib/finders/amazon/app";
 describe("AmazonAppFinder", () => {
     let finder, client;
 
-    beforeEach(() => client = { getContainer: (_, done) => done(null, null), getContainers: (done) => done(null, []) });
-    beforeEach(() => expect.spyOn(pkgcloud.storage, "createClient").andReturn(client));
-    beforeEach(() => finder = new AmazonAppFinder("foo", "bar"));
+    beforeEach(() => { client = { getContainer: (_, done) => done(null, null), getContainers: done => done(null, []) }; });
+    beforeEach(() => { expect.spyOn(pkgcloud.storage, "createClient").andReturn(client); });
+    beforeEach(() => { finder = new AmazonAppFinder("foo", "bar"); });
 
     describe("app", () => {
         describe("when app exists", () => {
@@ -36,13 +36,13 @@ describe("AmazonAppFinder", () => {
         });
 
         it("should return an empty app list", async() => {
-            expect.spyOn(client, "getContainers").andCall((done) => done(null, []));
+            expect.spyOn(client, "getContainers").andCall(done => done(null, []));
 
             expect(await finder.apps()).toEqual([]);
         });
 
         it("should return an empty app list if directory does not exist", async() => {
-            expect.spyOn(client, "getContainers").andCall((done) => done(new Error()));
+            expect.spyOn(client, "getContainers").andCall(done => done(new Error()));
 
             expect(await finder.apps()).toEqual([]);
         });

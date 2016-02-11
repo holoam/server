@@ -7,8 +7,8 @@ import LocalReleaseFinder from "../../../../lib/finders/local/release";
 describe("LocalReleaseFinder", () => {
     let finder, app;
 
-    beforeEach(() => finder = new LocalReleaseFinder(__dirname));
-    beforeEach(() => app = new App("todo"));
+    beforeEach(() => { finder = new LocalReleaseFinder(__dirname); });
+    beforeEach(() => { app = new App("todo"); });
 
     describe("exists", () => {
         it("should return true if release is a directory", async () => {
@@ -24,7 +24,7 @@ describe("LocalReleaseFinder", () => {
         });
 
         it("should return false if release does not exist", async () => {
-            expect.spyOn(fs, "stat").andCall((_, done) => done(null, { isDirectory: () => { throw new Error() } }));
+            expect.spyOn(fs, "stat").andCall((_, done) => done(null, { isDirectory: () => { throw new Error(); } }));
 
             expect(await finder.exists(app, "todo")).toBe(false);
         });
