@@ -2,12 +2,17 @@
   "name": "neutron-testapp",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "index.js",
   "author": "Julien Bianchi <contact@jubianchi.fr>",
   "license": "MIT",
   "scripts": {
-    "start": "electron .",
-    "package-osx": "electron-packager . neutron-testapp --platform=darwin --arch=x64 --version=0.36.5 --app-version=1.0.0 --asar --sign=Neutron --overwrite"
+    "start": "electron compiled/",
+    "prestart": "npm run package-osx",
+    "package-osx": "electron-packager compiled/ neutron-testapp --platform=darwin --arch=x64 --version=0.36.5 --app-version=1.0.0 --asar --sign=Neutron --overwrite",
+    "prepackage-osx": "npm run build",
+    "build": "babel -d compiled src/; cp package.json index.html compiled/; cp -r node_modules/bootstrap/dist/ compiled/bootstrap",
+    "features": "cucumber-js test/features",
+    "prefeatures": "npm run package-osx"
   },
   "dependencies": {
     "babel-polyfill": "^6.3.14",
@@ -17,6 +22,13 @@
     "bootstrap": "^3.3.6",
     "electron-packager": "^5.2.1",
     "electron-prebuilt": "^0.36.5"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "chromedriver": "^2.21.2",
+    "cucumber": "^0.9.4",
+    "expect": "^1.14.0",
+    "webdriverio": "^4.0.3"
   },
   "electron": {
     "version": "0.36.4",

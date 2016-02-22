@@ -9,7 +9,7 @@ app.on('ready', () => {
     let mainWindow = new BrowserWindow(config.window);
 
     mainWindow.loadURL('file://' + __dirname + '/index.html');
-    mainWindow.openDevTools({ detach: true });
+    //mainWindow.openDevTools({ detach: true });
 
     mainWindow.on('closed', () => mainWindow = null);
 
