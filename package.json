@@ -7,7 +7,7 @@
   },
   "main": "src/server.js",
   "scripts": {
-    "start": "NEUTRON_PID_FILE=pid node index.js",
+    "start": "NEUTRON_ADMIN_TOKEN=adminToken NEUTRON_PID_FILE=pid node index.js",
     "stop": "kill $(cat pid) && rm -rf pid",
     "test": "npm run lint && npm run specs && npm run features",
     "specs": "mocha --compilers js:babel-register --recursive test/specs",
@@ -24,8 +24,10 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
     "babel-register": "^6.4.3",
+    "co-multipart": "^2.0.0",
     "conventional-changelog": "^0.5.3",
     "koa": "^1.1.2",
+    "koa-bodyparser": "^2.0.1",
     "koa-json": "^1.1.1",
     "koa-logger": "^1.3.0",
     "koa-router": "^5.3.0",
@@ -34,6 +36,7 @@
     "pkgcloud": "^1.2.0-alpha.0",
     "q": "^1.4.1",
     "request-promise": "^2.0.0",
+    "rmdir": "^1.2.0",
     "semver": "^5.0.3"
   },
   "devDependencies": {

@@ -1,8 +1,8 @@
 "use strict";
 
 module.exports = function () {
-    this.When(/^I GET "([^"]*)"$/, function (page) {
-        return this.get(page);
+    this.When(/^I (GET|DELETE) "([^"]*)"$/, function (method, page) {
+        return this[method.toLowerCase()](page);
     });
 
     this.Then(/^the response should be "([^"]*)"$/, function (response) {

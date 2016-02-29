@@ -6,7 +6,7 @@ import AppController from "../../../lib/controllers/app";
 import UrlGenerator from "../../../lib/utils/urlGenerator";
 
 describe("AppController", () => {
-    let finder, controller, app, context, generator, baseUrl, router;
+    let finder, controller, app, context, generator, baseUrl, router, uploader;
 
     beforeEach(() => { app = new App("todo"); });
     beforeEach(() => {
@@ -15,10 +15,16 @@ describe("AppController", () => {
             app: async name => (name === app.name ? app : null)
         };
     });
+    beforeEach(() => {
+        uploader = {
+            upload: async () => {},
+            remove: async () => {}
+        };
+    });
     beforeEach(() => { baseUrl = "http://baseUrl"; });
     beforeEach(() => { router = new Router(); });
     beforeEach(() => { generator = new UrlGenerator(baseUrl, router); });
-    beforeEach(() => { controller = new AppController(finder, generator); });
+    beforeEach(() => { controller = new AppController(finder, uploader, generator); });
     beforeEach(() => {
         context = {
             headers: {},
@@ -70,5 +76,71 @@ describe("AppController", () => {
         } catch (e) {}
 
         expect(spy).toHaveBeenCalledWith(null, 404, "The 'tata' app does not exist");
+    });
+
+    describe("upload application", () => {
+        let newApp;
+
+        beforeEach(() => { newApp = new App("neutron"); });
+
+        it("should upload a new app", async () => {
+            const spy = expect.spyOn(uploader, "upload").andCallThrough();
+
+            await controller.addAction(context, newApp);
+
+            expect(spy).toHaveBeenCalledWith(newApp.name);
+        });
+
+        it("should refuse to upload already existing app", async () => {
+            const spy = expect.spyOn(context, "assert").andCallThrough();
+
+            try {
+                await controller.addAction(context, app);
+            } catch(e) {}
+
+            expect(spy).toHaveBeenCalledWith(!app, 409, `The '${app.name}' app already exists`);
+        });
+
+        it("should send a 500 if there is an error", async () => {
+            const spy = expect.spyOn(uploader, "upload").andThrow(new Error());
+
+            await controller.addAction(context, newApp);
+
+            expect(spy).toHaveBeenCalledWith(newApp.name);
+            expect(context.status).toEqual(500);
+        });
+    });
+
+    describe("remove application", () => {
+        let newApp;
+
+        beforeEach(() => { newApp = new App("neutron"); });
+
+        it("should remove an app", async () => {
+            const spy = expect.spyOn(uploader, "remove").andCallThrough();
+
+            await controller.removeAction(context, app.name);
+
+            expect(spy).toHaveBeenCalledWith(app.name);
+        });
+
+        it("should refuse to remove a not existing app", async () => {
+            const spy = expect.spyOn(context, "assert").andCallThrough();
+
+            try {
+                await controller.removeAction(context, newApp.name);
+            } catch(e) {}
+
+            expect(spy).toHaveBeenCalledWith(null, 404, `The '${newApp.name}' app does not exist`);
+        });
+
+        it("should send a 500 if there is an error", async () => {
+            const spy = expect.spyOn(uploader, "remove").andThrow(new Error());
+
+            await controller.removeAction(context, app.name);
+
+            expect(spy).toHaveBeenCalledWith(app.name);
+            expect(context.status).toEqual(500);
+        });
     });
 });
