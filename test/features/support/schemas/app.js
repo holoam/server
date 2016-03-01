@@ -5,7 +5,15 @@ module.exports = {
     properties: {
         name: {
             type: "string"
+        },
+        links: {
+            type: "object",
+            properties: {
+                api: {
+                    type: "string"
+                }
+            }
         }
     },
-    required: ["name"]
+    required: ["name", "links"]
 };

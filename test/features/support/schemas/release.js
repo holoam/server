@@ -14,6 +14,17 @@ module.exports = {
         },
         url: {
             type: "string"
+        },
+        links: {
+            type: "object",
+            properties: {
+                api: {
+                    type: "string"
+                },
+                download: {
+                    type: "string"
+                }
+            }
         }
     },
     required: ["version", "url"]

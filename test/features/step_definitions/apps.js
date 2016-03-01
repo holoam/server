@@ -14,7 +14,15 @@ module.exports = function () {
     });
 
     this.Then(/^the app list should contain the "([^"]+)" app$/, function (name) {
-        return this.assert.includes(this.response.json(), { name });
+        return this.assert.includes(
+            this.response.json(),
+            {
+                name,
+                links: {
+                    api: `http://localhost:8080/v1/apps/${name}`
+                }
+            }
+        );
     });
 
     this.Then(/^I should see an app/, function () {
