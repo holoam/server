@@ -8,7 +8,7 @@ A simple [Squirrel](https://github.com/Squirrel) update server.
 
  * Provides Mac OS updates
  * Supports multiple applications
- * Supports multiple storage providers (Amazon, Azure, Github)
+ * Supports multiple storage providers (Amazon, Azure, Github, Provider)
  
 ## How to use
 
@@ -32,15 +32,15 @@ docker run --rm --name=neutron neutron
 
 Configuring neutron is done through environment variables only:
 
-| Variable name       | Description                                                                                | Default         |
-|---------------------|--------------------------------------------------------------------------------------------|-----------------|
-| NEUTRON_SCHEME      | Scheme used to reach neutron server (`http` or `https`)                                    | `http`          |
-| NEUTRON_HOST        | Host used to reach neutron server                                                          | `localhost`     |
-| NEUTRON_PORT        | Port used to reach neutron server                                                          | `8080`          |
-| PORT                | Private port used to reach neutron server (useful when behind a load balancer for example) | `$NEUTRON_PORT` |
-| NEUTRON_PID_FILE    | Path to a file to store neutron server PID                                                 | `null`          |
-| NEUTRON_ADMIN_TOKEN | Token to be used by Neutron Manager                                                        | `null`          |
-| NEUTRON_STORAGE     | Storage provider used to store updates (`local`, `azure`, `amazon` or `github`)            | `local`         |
+| Variable name       | Description                                                                                  | Default         |
+|---------------------|----------------------------------------------------------------------------------------------|-----------------|
+| NEUTRON_SCHEME      | Scheme used to reach neutron server (`http` or `https`)                                      | `http`          |
+| NEUTRON_HOST        | Host used to reach neutron server                                                            | `localhost`     |
+| NEUTRON_PORT        | Port used to reach neutron server                                                            | `8080`          |
+| PORT                | Private port used to reach neutron server (useful when behind a load balancer for example)   | `$NEUTRON_PORT` |
+| NEUTRON_PID_FILE    | Path to a file to store neutron server PID                                                   | `null`          |
+| NEUTRON_ADMIN_TOKEN | Token to be used by Neutron Manager                                                          | `null`          |
+| NEUTRON_STORAGE     | Storage provider used to store updates (`local`, `azure`, `amazon`, `openstack` or `github`) | `local`         |
 
 ### Local storage
 
@@ -70,6 +70,15 @@ Configuring neutron is done through environment variables only:
 | NEUTRON_STORAGE_GITHUB_TOKEN        | Github [personal token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/) | `null`  |    
 | NEUTRON_STORAGE_GITHUB_OWNER        | Github organization/owner                                                                                | `null`  |    
 | NEUTRON_STORAGE_GITHUB_REPOSITORIES | Allowed Github repositories (a string representing a JSON array)                                         | `"[]"`  |    
+
+### Openstack storage
+
+| Variable name                      | Description                                         | Default     |
+|------------------------------------|-----------------------------------------------------|-------------|
+| NEUTRON_STORAGE_OPENSTACK_USERNAME | Openstack username                                  | `null`      |
+| NEUTRON_STORAGE_OPENSTACK_PASSWORD | Openstack password                                  | `null`      |
+| NEUTRON_STORAGE_OPENSTACK_AUTH_URL | Openstack authentication URL (without API version)  | `null`      |
+| NEUTRON_STORAGE_OPENSTACK_REGION   | Openstack region                                    | `null`      |
 
 ## How to store updates
 
