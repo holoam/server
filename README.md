@@ -174,6 +174,32 @@ process looks like this:
 ```
 * The application will the follow the `url` link, download the update and install it
 
+### Admin API
+
+THe admin API is mainly designer for [Neutron Manager](https://github.com/jubianchi/neutron-manager) to manage applications
+and releases:
+
+* `POST /v1/apps` to create a new application
+
+```json
+{
+    "name": "new-app"
+}
+```
+
+* `DELETE /v1/apps/:app` (where `:app` is the application name) to delete an application
+* `POST /v1/apps/:app/releases` (where `:app` is the application name) to create an new release. This **must** be a multipart request with
+  * a `file` part containing the release distribution ZIP file
+  * a `data` part contaning a JSON string describing the release
+  
+```json
+{
+    "version": "1.0.0",
+    "notes": "#1.0.0\nbla bla bla"
+}
+```
+* `DELETE /v1/apps/:app/releases/:version` (where `:app` is the application name and `:version` the release version) to delete a release
+
 ### Enabling the auto-updater in Electron
 
 [Electron](http://electron.atom.io/) provides an [auto-updater](http://electron.atom.io/docs/v0.36.8/api/auto-updater/) module
