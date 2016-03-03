@@ -1,5 +1,4 @@
 # Neutron [![Build Status](https://travis-ci.org/jubianchi/neutron.svg?branch=master)](https://travis-ci.org/jubianchi/neutron)
-=======
 
 A simple [Squirrel](https://github.com/Squirrel) update server.
 
@@ -33,14 +32,15 @@ docker run --rm --name=neutron neutron
 
 Configuring neutron is done through environment variables only:
 
-| Variable name    | Description                                                                                | Default         |
-|------------------|--------------------------------------------------------------------------------------------|-----------------|
-| NEUTRON_SCHEME   | Scheme used to reach neutron server (`http` or `https`)                                    | `http`          |
-| NEUTRON_HOST     | Host used to reach neutron server                                                          | `localhost`     |
-| NEUTRON_PORT     | Port used to reach neutron server                                                          | `8080`          |
-| PORT             | Private port used to reach neutron server (useful when behind a load balancer for example) | `$NEUTRON_PORT` |
-| NEUTRON_PID_FILE | Path to a file to store neutron server PID                                                 | `null`          |
-| NEUTRON_STORAGE  | Storage provider used to store updates (`local`, `azure`, `amazon` or `github`)            | `local`         |
+| Variable name       | Description                                                                                | Default         |
+|---------------------|--------------------------------------------------------------------------------------------|-----------------|
+| NEUTRON_SCHEME      | Scheme used to reach neutron server (`http` or `https`)                                    | `http`          |
+| NEUTRON_HOST        | Host used to reach neutron server                                                          | `localhost`     |
+| NEUTRON_PORT        | Port used to reach neutron server                                                          | `8080`          |
+| PORT                | Private port used to reach neutron server (useful when behind a load balancer for example) | `$NEUTRON_PORT` |
+| NEUTRON_PID_FILE    | Path to a file to store neutron server PID                                                 | `null`          |
+| NEUTRON_ADMIN_TOKEN | Token to be used by Neutron Manager                                                        | `null`          |
+| NEUTRON_STORAGE     | Storage provider used to store updates (`local`, `azure`, `amazon` or `github`)            | `local`         |
 
 ### Local storage
 

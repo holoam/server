@@ -26,7 +26,13 @@ class World {
     deleteApp(app) {
         this.deleteReleases(app);
 
-        fs.rmdirSync(path.join(this.directory, app));
+        try {
+            fs.rmdirSync(path.join(this.directory, app));
+        } catch (e) {
+            if (e.code !== "ENOENT") {
+                throw e;
+            }
+        }
 
         delete this.releases[app];
     }
@@ -36,8 +42,21 @@ class World {
     }
 
     deleteRelease(app, name) {
-        fs.unlinkSync(path.join(this.directory, app, name, "update.zip"));
-        fs.rmdirSync(path.join(this.directory, app, name));
+        try {
+            fs.unlinkSync(path.join(this.directory, app, name, "update.zip"));
+        } catch (e) {
+            if (e.code !== "ENOENT") {
+                throw e;
+            }
+        }
+
+        try {
+            fs.rmdirSync(path.join(this.directory, app, name));
+        } catch (e) {
+            if (e.code !== "ENOENT") {
+                throw e;
+            }
+        }
 
         this.releases[app] = this.releases[app].filter(release => release !== name);
     }
@@ -91,14 +110,39 @@ class World {
         return this.browser.url(`${this.scheme}://${this.host}:${this.port}${url}`);
     }
 
-    get(url) {
+    ["get"](url) {
         this._response = undefined;
         this._error = undefined;
 
         const options = {
             method: "GET",
             uri: `${this.scheme}://${this.host}:${this.port}${url}`,
-            resolveWithFullResponse: true
+            resolveWithFullResponse: true,
+            headers: {
+                Authorization: "Token adminToken"
+            }
+        };
+
+        return request(options)
+            .then(response => {
+                this._response = response;
+
+                return this._response;
+            })
+            .catch(error => { this._error = error; });
+    }
+
+    ["delete"](url) {
+        this._response = undefined;
+        this._error = undefined;
+
+        const options = {
+            method: "DELETE",
+            uri: `${this.scheme}://${this.host}:${this.port}${url}`,
+            resolveWithFullResponse: true,
+            headers: {
+                Authorization: "Token adminToken"
+            }
         };
 
         return request(options)
