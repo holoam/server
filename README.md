@@ -8,7 +8,7 @@ A simple [Squirrel](https://github.com/Squirrel) update server.
 
  * Provides Mac OS updates
  * Supports multiple applications
- * Supports multiple storage providers (Amazon, Azure, Github, Provider)
+ * Supports multiple storage providers (Amazon, Azure, Github, Openstack)
  
 ## How to use
 
