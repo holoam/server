@@ -1,8 +1,8 @@
-# Neutron [![Build Status](https://travis-ci.org/jubianchi/neutron.svg?branch=master)](https://travis-ci.org/jubianchi/neutron)
+# Neutron [![Build Status](https://travis-ci.org/jubianchi/neutron.svg?branch=master)](https://travis-ci.org/jubianchi/neutron) [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/jubianchi/neutron/tree/master)
 
 A simple [Squirrel](https://github.com/Squirrel) update server.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/jubianchi/neutron/tree/master)
+![neutron](neutron.png)
 
 ## Features
 
