@@ -10,7 +10,7 @@ module.exports = function () {
     });
 
     this.Then(/^the error message should be "([^"]*)"$/, function (error) {
-        return this.assert.equals(this.error.error, error);
+        return this.assert.equals(this.error.message, error);
     });
 
     this.Then(/^I should get a (\d+)$/, function (status) {

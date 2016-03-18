@@ -103,7 +103,7 @@ class World {
     }
 
     get error() {
-        return this._error;
+        return this._error ? JSON.parse(this._error.error) : null;
     }
 
     visit(url) {
